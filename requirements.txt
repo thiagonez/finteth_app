@@ -1,4 +1,28 @@
-#streamlit
+streamlit
+sqlalchemy
+psycopg2-binary
+alembic
+pandas
+numpy
+openpyxl
+ofxparse
+pdfplumber
+matplotlib
+plotly
+seaborn
+stripe
+google-generativeai
+python-jose
+passlib
+python-dotenv
+bcrypt
+requests
+python-multipart
+validators
+
+
+
+
 #python-dotenv
 #matplotlib
 #stripe
@@ -12,38 +36,38 @@
 
 
 # Framework principal
-streamlit==1.32.0
-streamlit-extras==0.3.5
-streamlit-option-menu==0.3.6
+#streamlit==1.32.0
+#streamlit-extras==0.3.5
+#streamlit-option-menu==0.3.6
 
 # Banco de dados
-sqlalchemy==2.0.27
-psycopg2-binary==2.9.6
-alembic==1.13.1
+#sqlalchemy==2.0.27
+#psycopg2-binary==2.9.6
+#alembic==1.13.1
 
 # Processamento de dados
-pandas==2.1.4
-numpy==1.26.3
-openpyxl==3.1.2
-ofxparse==0.21
-pdfplumber==0.10.3
+#pandas==2.1.4
+#numpy==1.26.3
+#openpyxl==3.1.2
+#ofxparse==0.21
+#pdfplumber==0.10.3
 
 # Visualização
-matplotlib==3.8.2
-plotly==5.18.0
-seaborn==0.13.1
+#matplotlib==3.8.2
+#plotly==5.18.0
+#seaborn==0.13.1
 
 # Integrações
-stripe==7.11.0
-google-generativeai==0.3.1
+#stripe==7.11.0
+#google-generativeai==0.3.1
 
 # Autenticação e segurança
-python-jose==3.3.0
-passlib==1.7.4
-python-dotenv==1.0.0
-bcrypt==4.1.2
+#python-jose==3.3.0
+#passlib==1.7.4
+#python-dotenv==1.0.0
+#bcrypt==4.1.2
 
 # Utilitários
-requests==2.31.0
-python-multipart==0.0.6
-validators==0.22.0
+#requests==2.31.0
+#python-multipart==0.0.6
+#validators==0.22.0
