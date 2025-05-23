@@ -63,13 +63,13 @@ except Exception as e:
     st.warning(f"Não foi possível carregar o CSS: {e}")
 
 # Importar páginas
-from app.pages.welcome import show as show_welcome
-from app.pages.onboarding import show as show_onboarding
-from app.pages.financial_input import show as show_financial_input
-from app.pages.questionnaire import show as show_questionnaire
-from app.pages.dashboard import show as show_dashboard
-from app.pages.payment import show as show_payment
-from app.pages.reports import show as show_reports
+from pages.welcome import show as show_welcome
+from pages.onboarding import show as show_onboarding
+from pages.financial_input import show as show_financial_input
+from pages.questionnaire import show as show_questionnaire
+from pages.dashboard import show as show_dashboard
+from pages.payment import show as show_payment
+from pages.reports import show as show_reports
 
 # Roteamento de páginas
 def route():
