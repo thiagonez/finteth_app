@@ -32,7 +32,7 @@ def show():
     financial_data = st.session_state.financial_data
     
     # Obter perfil comportamental
-    from app.pages.questionnaire import calculate_profile
+    from pages.questionnaire import calculate_profile
     profile_scores = calculate_profile(st.session_state.question_responses)
     
     # Tabs para diferentes relatórios
