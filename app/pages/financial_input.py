@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from app.components.navigation import navigation_buttons
-from app.utils.file_import import validate_file, process_financial_data
+from components.navigation import navigation_buttons
+from utils.file_import import validate_file, process_financial_data
 
 def show():
     """Página de entrada de dados financeiros"""
