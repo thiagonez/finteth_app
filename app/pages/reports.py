@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
-from app.components.navigation import navigation_buttons
+from components.navigation import navigation_buttons
 
 def show():
     """Página de relatórios detalhados"""
