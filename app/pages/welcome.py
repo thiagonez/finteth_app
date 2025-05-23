@@ -55,7 +55,7 @@ def show():
     st.markdown("<div class='center-content'>", unsafe_allow_html=True)
     if st.button("Começar Agora", key="start_button"):
         st.session_state.current_page = "onboarding"
-        st.experimental_rerun()
+        st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
     
     # Informações adicionais
