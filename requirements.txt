@@ -1,10 +1,10 @@
-streamlit
-python-dotenv
-matplotlib
-stripe
-pandas
-numpy
-plotly
+#streamlit
+#python-dotenv
+#matplotlib
+#stripe
+#pandas
+#numpy
+#plotly
 
 
 
