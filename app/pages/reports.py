@@ -21,7 +21,7 @@ def show():
                 st.session_state.current_page = "financial_input"
             else:
                 st.session_state.current_page = "questionnaire"
-            st.experimental_rerun()
+            st.rerun()
         
         return
     
@@ -250,7 +250,7 @@ def show():
             
             if st.button("Adquirir Plano Premium", key="premium_debt"):
                 st.session_state.current_page = "payment"
-                st.experimental_rerun()
+                st.rerun()
     
     with tab2:
         st.markdown("<h2>Visão Geral e Saúde Financeira</h2>", unsafe_allow_html=True)
@@ -510,7 +510,7 @@ def show():
             
             if st.button("Adquirir Plano Premium", key="premium_health"):
                 st.session_state.current_page = "payment"
-                st.experimental_rerun()
+                st.rerun()
     
     with tab3:
         st.markdown("<h2>Perfil Comportamental</h2>", unsafe_allow_html=True)
@@ -815,7 +815,7 @@ def show():
             
             if st.button("Adquirir Plano Premium", key="premium_psych"):
                 st.session_state.current_page = "payment"
-                st.experimental_rerun()
+                st.rerun()
     
     with tab4:
         st.markdown("<h2>Plano de Ação</h2>", unsafe_allow_html=True)
@@ -1129,7 +1129,7 @@ def show():
             
             if st.button("Adquirir Plano Premium", key="premium_plan"):
                 st.session_state.current_page = "payment"
-                st.experimental_rerun()
+                st.rerun()
     
     # Navegação
     navigation_buttons(prev_page="dashboard", next_page=None)
