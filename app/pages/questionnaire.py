@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from app.components.navigation import navigation_buttons
+from components.navigation import navigation_buttons
 
 def show():
     """Página de questionário comportamental"""
