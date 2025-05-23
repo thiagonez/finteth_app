@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
-from app.components.navigation import navigation_buttons
+from components.navigation import navigation_buttons
 
 def show():
     """Página de dashboard com visualizações financeiras e comportamentais"""
@@ -29,7 +29,7 @@ def show():
     financial_data = st.session_state.financial_data
     
     # Obter perfil comportamental
-    from app.pages.questionnaire import calculate_profile
+    from pages.questionnaire import calculate_profile
     profile_scores = calculate_profile(st.session_state.question_responses)
     
     # Tabs para diferentes visualizações
