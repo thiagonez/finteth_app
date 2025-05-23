@@ -273,7 +273,7 @@ def show():
         
         # Descrições dos perfis
         profile_descriptions = {
-            "Evitador": """
+            "evitador": """
             <div class="profile-card">
                 <h3>Perfil Evitador</h3>
                 <p>Você tende a evitar lidar com questões financeiras, possivelmente por ansiedade ou desconforto. 
@@ -285,7 +285,7 @@ def show():
             </div>
             """,
             
-            "Apegado": """
+            "apegado": """
             <div class="profile-card">
                 <h3>Perfil Apegado</h3>
                 <p>Você tende a ser muito cauteloso com dinheiro, priorizando segurança e estabilidade. 
@@ -297,7 +297,7 @@ def show():
             </div>
             """,
             
-            "Ostentador": """
+            "ostentador": """
             <div class="profile-card">
                 <h3>Perfil Ostentador</h3>
                 <p>Você tende a usar o dinheiro como forma de expressão social e status. 
@@ -309,7 +309,7 @@ def show():
             </div>
             """,
             
-            "Planejador": """
+            "planejador": """
             <div class="profile-card">
                 <h3>Perfil Planejador</h3>
                 <p>Você tende a ser organizado e estratégico com suas finanças. 
