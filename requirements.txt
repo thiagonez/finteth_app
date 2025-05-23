@@ -4,6 +4,7 @@ matplotlib
 stripe
 pandas
 numpy
+plotly
 
 
 
