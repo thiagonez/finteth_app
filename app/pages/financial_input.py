@@ -137,7 +137,7 @@ def show():
                 
                 # Avançar para a próxima página
                 st.session_state.current_page = "questionnaire"
-                st.experimental_rerun()
+                st.rerun()
     
     with tab2:
         st.markdown("<h2>Importar Dados Financeiros</h2>", unsafe_allow_html=True)
@@ -184,7 +184,7 @@ def show():
                     
                     # Avançar para a próxima página
                     st.session_state.current_page = "questionnaire"
-                    st.experimental_rerun()
+                    st.rerun()
             else:
                 st.error(message)
     
