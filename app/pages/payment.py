@@ -1,7 +1,7 @@
 import streamlit as st
 import stripe
-from app.components.navigation import navigation_buttons
-from app.config import STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY
+from components.navigation import navigation_buttons
+from config import STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY
 
 # Configurar Stripe
 stripe.api_key = STRIPE_SECRET_KEY
