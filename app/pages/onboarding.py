@@ -1,5 +1,5 @@
 import streamlit as st
-from app.components.navigation import navigation_buttons
+from components.navigation import navigation_buttons
 
 def show():
     """Página de onboarding e consentimento"""
