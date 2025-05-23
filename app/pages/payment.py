@@ -18,7 +18,7 @@ def show():
         # Botão para ver relatórios
         if st.button("Ver Meus Relatórios Premium"):
             st.session_state.current_page = "reports"
-            st.experimental_rerun()
+            st.rerun()
         
         return
     
@@ -120,7 +120,7 @@ def show():
                     # Botão para ver relatórios
                     if st.button("Ver Meus Relatórios Premium"):
                         st.session_state.current_page = "reports"
-                        st.experimental_rerun()
+                        st.rerun()
     
     # Informações de segurança
     st.markdown("""
