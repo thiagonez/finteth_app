@@ -5,6 +5,17 @@ import matplotlib.pyplot as plt
 from components.navigation import navigation_buttons
 from utils.file_import import validate_file, process_financial_data
 
+# Upload de arquivo considerar Real do Brasil
+def parse_brl_to_float(valor_str):
+    """Converte string no formato brasileiro para float."""
+    if valor_str:
+        try:
+            return float(valor_str.replace('.', '').replace(',', '.'))
+        except ValueError:
+            return None
+    return None
+
+
 def show():
     """Página de entrada de dados financeiros"""
     
