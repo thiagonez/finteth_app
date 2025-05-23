@@ -39,7 +39,8 @@ def show():
         if submitted:
             if consent1 and consent2 and consent3:
                 st.session_state.current_page = "financial_input"
-                st.experimental_rerun()
+                st.rerun()
+
             else:
                 st.error("Por favor, concorde com todos os termos para continuar.")
     
