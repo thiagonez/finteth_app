@@ -131,18 +131,18 @@ def show():
         if current_page > 1:
             if st.button("← Anterior"):
                 st.session_state.questionnaire_page -= 1
-                st.experimental_rerun()
+                st.rerun()
     
     with col3:
         if current_page < total_pages:
             if st.button("Próximo →"):
                 st.session_state.questionnaire_page += 1
-                st.experimental_rerun()
+                st.rerun()
         else:
             if st.button("Finalizar Questionário"):
                 st.session_state.questionnaire_completed = True
                 st.session_state.current_page = "dashboard"
-                st.experimental_rerun()
+                st.rerun()
     
     # Exibir resultados parciais se todas as perguntas foram respondidas
     if len(st.session_state.question_responses) == len(questions) and current_page == total_pages:
