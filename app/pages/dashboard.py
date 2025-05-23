@@ -21,7 +21,7 @@ def show():
                 st.session_state.current_page = "financial_input"
             else:
                 st.session_state.current_page = "questionnaire"
-            st.experimental_rerun()
+            st.rerun()
         
         return
     
