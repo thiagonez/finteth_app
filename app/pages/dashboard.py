@@ -156,7 +156,7 @@ def show():
         st.markdown("<div class='center-content'>", unsafe_allow_html=True)
         if st.button("Ver Relatório Completo (Premium)"):
             st.session_state.current_page = "payment"
-            st.experimental_rerun()
+            st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
     
     with tab2:
@@ -339,7 +339,7 @@ def show():
         st.markdown("<div class='center-content'>", unsafe_allow_html=True)
         if st.button("Ver Relatório Comportamental Completo (Premium)", key="premium_behavior"):
             st.session_state.current_page = "payment"
-            st.experimental_rerun()
+            st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
     
     # Navegação
