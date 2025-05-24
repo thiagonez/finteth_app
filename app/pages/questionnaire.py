@@ -21,6 +21,56 @@ def show():
     if "question_responses" not in st.session_state:
         st.session_state.question_responses = {}
     
+    
+    
+    
+    # CSS para radio button No cabeçalho do questionário:
+st.markdown("""
+<style>
+    div[role=radiogroup] {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+    }
+    div[role=radiogroup] label {
+        flex: 1;
+        text-align: center;
+        padding: 10px;
+        border-radius: 20px;
+        border: 2px solid #4F8BF9;
+        transition: all 0.3s;
+    }
+    div[role=radiogroup] label:hover {
+        background: #4F8BF920;
+    }
+    div[role=radiogroup] label[data-baseweb=radio] div:first-child {
+        display: none !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+    
+    
+    
+    
+    
+    
+    # Código para colocar radio buttonNo loop das perguntas:
+with cols[1]:
+    response = st.radio(
+        f"Pergunta {i+1}",
+        options=[x[0] for x in opcoes],
+        index=3,  # Valor padrão = 4 (Neutro)
+        format_func=lambda x: dict(opcoes)[x],
+        horizontal=True,
+        label_visibility="collapsed",
+        key=f"question_{i}"
+    )
+    
+    
+    
+    
+    
+    
     # Definir perguntas
     questions = [
         {
