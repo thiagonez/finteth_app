@@ -166,8 +166,6 @@ def load_custom_radio_css():
     </style>
     """, unsafe_allow_html=True)
 
-
-
 def show():
     """Página de questionário comportamental"""
     # Carregar CSS customizado PRIMEIRO
@@ -187,10 +185,6 @@ def show():
     </div>
     """, unsafe_allow_html=True)
 
-
-
-    
-    
     # Definir perguntas
     questions = [
         {
@@ -255,11 +249,7 @@ def show():
         }
     ]
     
-    
-    
-    
-    
-    # Configurações de paginação (mantém igual)
+    # Configurações de paginação
     if 'questionnaire_page' not in st.session_state:
         st.session_state.questionnaire_page = 1
     if 'question_responses' not in st.session_state:
@@ -271,49 +261,42 @@ def show():
 
     st.markdown(f"<h4 style='text-align: center;'>Etapa {current_page} de {total_pages}</h4>", unsafe_allow_html=True)
 
-    # Exibir perguntas da página atual - SEÇÃO MODIFICADA
+    # Exibir perguntas da página atual - SEÇÃO CORRIGIDA
     start_idx = (current_page - 1) * questions_per_page
     end_idx = min(start_idx + questions_per_page, len(questions))
 
-    
+    # IMPORTANTE: Todo este bloco deve estar DENTRO da função show()
+    for i in range(start_idx, end_idx):
+        question = questions[i]
+        
+        # Pergunta centralizada
+        st.markdown(f"<h3 style='text-align: center; margin-bottom: 10px;'>{question['text']}</h3>", unsafe_allow_html=True)
+        
+        # Labels de Concordo e Discordo
+        cols_labels = st.columns([1, 6, 1])
+        with cols_labels[0]:
+            st.markdown("<p style='text-align: center; color: #10B981; font-weight: bold; margin-bottom: 5px;'>Concordo</p>", unsafe_allow_html=True)
+        
+        with cols_labels[2]:
+            st.markdown("<p style='text-align: center; color: #8B5CF6; font-weight: bold; margin-bottom: 5px;'>Discordo</p>", unsafe_allow_html=True)
+        
+        # Radio buttons customizados
+        response = st.radio(
+            f"Pergunta {i+1}",
+            options=[1, 2, 3, 4, 5, 6, 7],
+            index=st.session_state.question_responses.get(question["id"], 4) - 1,
+            horizontal=True,
+            label_visibility="collapsed",
+            key=f"question_{question['id']}"
+        )
+        
+        # Armazenar resposta
+        st.session_state.question_responses[question["id"]] = response
+        
+        # Espaçamento entre perguntas
+        st.markdown("<div style='margin-bottom: 40px;'></div>", unsafe_allow_html=True)
 
-# Nova implementação com radio buttons customizados
-for i in range(start_idx, end_idx):
-    question = questions[i]
-    
-    # Pergunta centralizada
-    st.markdown(f"<h3 style='text-align: center; margin-bottom: 10px;'>{question['text']}</h3>", unsafe_allow_html=True)
-    
-    # Labels de Concordo e Discordo
-    cols_labels = st.columns([1, 6, 1])
-    with cols_labels[0]:
-        st.markdown("<p style='text-align: center; color: #10B981; font-weight: bold; margin-bottom: 5px;'>Concordo</p>", unsafe_allow_html=True)
-    
-    with cols_labels[2]:
-        st.markdown("<p style='text-align: center; color: #8B5CF6; font-weight: bold; margin-bottom: 5px;'>Discordo</p>", unsafe_allow_html=True)
-    
-    # Radio buttons customizados
-    response = st.radio(
-        f"Pergunta {i+1}",
-        options=[1, 2, 3, 4, 5, 6, 7],
-        index=st.session_state.question_responses.get(question["id"], 4) - 1,  # Converter para índice (0-6)
-        horizontal=True,
-        label_visibility="collapsed",
-        key=f"question_{question['id']}"
-    )
-    
-    # Armazenar resposta
-    st.session_state.question_responses[question["id"]] = response
-    
-    # Espaçamento entre perguntas
-    st.markdown("<div style='margin-bottom: 40px;'></div>", unsafe_allow_html=True)
-
-
-
-
-    
-
-    # Botões de navegação (mantém igual)
+    # Botões de navegação
     col1, col2, col3 = st.columns([1, 1, 1])
     
     with col1:
@@ -333,12 +316,6 @@ for i in range(start_idx, end_idx):
                 st.session_state.current_page = "dashboard"
                 st.rerun()
 
-
-
-
-
-    
-    
     # Exibir resultados parciais se todas as perguntas foram respondidas
     if len(st.session_state.question_responses) == len(questions) and current_page == total_pages:
         st.markdown("<h2>Resultados Parciais</h2>", unsafe_allow_html=True)
