@@ -6,6 +6,35 @@ from components.navigation import navigation_buttons
 
 def show():
     """Página de questionário comportamental"""
+
+
+# Thiago aqui CSS para estilização dos radio buttons
+    st.markdown("""
+    <style>
+        div[role=radiogroup] {
+            display: flex;
+            justify-content: space-between;
+            gap: 4px;
+        }
+        div[role=radiogroup] label {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            border-radius: 20px;
+            border: 2px solid #4F8BF9;
+            transition: all 0.3s;
+            background: #F8F9FA;
+        }
+        div[role=radiogroup] label:hover {
+            background: #4F8BF920;
+        }
+        div[role=radiogroup] label[data-baseweb=radio] div:first-child {
+            display: none !important;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+
     
     st.markdown("<h1>Questionário Comportamental</h1>", unsafe_allow_html=True)
     
@@ -16,6 +45,19 @@ def show():
         <p>Não existem respostas certas ou erradas. O objetivo é entender sua relação única com o dinheiro.</p>
     </div>
     """, unsafe_allow_html=True)
+
+ # Opções do questionário com labels completos
+    opcoes = {
+        1: "1 - Discordo totalmente",
+        2: "2 - Discordo moderadamente",
+        3: "3 - Discordo um pouco", 
+        4: "4 - Neutro",
+        5: "5 - Concordo um pouco",
+        6: "6 - Concordo moderadamente",
+        7: "7 - Concordo totalmente"
+    }
+
+
     
     # Inicializar respostas no state se não existirem
     if "question_responses" not in st.session_state:
@@ -24,52 +66,10 @@ def show():
     
     
     
-    # CSS para radio button No cabeçalho do questionário:
-st.markdown("""
-<style>
-    div[role=radiogroup] {
-        display: flex;
-        justify-content: space-between;
-        gap: 8px;
-    }
-    div[role=radiogroup] label {
-        flex: 1;
-        text-align: center;
-        padding: 10px;
-        border-radius: 20px;
-        border: 2px solid #4F8BF9;
-        transition: all 0.3s;
-    }
-    div[role=radiogroup] label:hover {
-        background: #4F8BF920;
-    }
-    div[role=radiogroup] label[data-baseweb=radio] div:first-child {
-        display: none !important;
-    }
-</style>
-""", unsafe_allow_html=True)
     
     
     
-    
-    
-    
-    # Código para colocar radio buttonNo loop das perguntas:
-with cols[1]:
-    response = st.radio(
-        f"Pergunta {i+1}",
-        options=[x[0] for x in opcoes],
-        index=3,  # Valor padrão = 4 (Neutro)
-        format_func=lambda x: dict(opcoes)[x],
-        horizontal=True,
-        label_visibility="collapsed",
-        key=f"question_{i}"
-    )
-    
-    
-    
-    
-    
+
     
     # Definir perguntas
     questions = [
@@ -157,22 +157,34 @@ with cols[1]:
         question = questions[i]
         st.markdown(f"<h3 class='question-text'>{question['text']}</h3>", unsafe_allow_html=True)
         
-        # Criar opções de resposta (escala de 1 a 7)
-        cols = st.columns([1, 7, 1])
-        with cols[0]:
-            st.markdown("<p class='scale-label'>Discordo</p>", unsafe_allow_html=True)
+       # Exibir perguntas da página atual
+    start_idx = (current_page - 1) * questions_per_page
+    end_idx = min(start_idx + questions_per_page, len(questions))
+    
+    for i in range(start_idx, end_idx):
+        question = questions[i]
         
-        with cols[1]:
-            response = st.select_slider(
-                f"Pergunta {i+1}",
-                options=list(range(1, 8)),
-                value=st.session_state.question_responses.get(question["id"], 4),
+        # Container para cada pergunta
+        with st.container():
+            st.markdown(f"**Pergunta {i+1}:** {question['text']}")
+            
+            # Botões de rádio estilizados
+            response = st.radio(
+                label=f"Resposta {i+1}",
+                options=list(opcoes.keys()),
+                format_func=lambda x: opcoes[x],
+                horizontal=True,
+                key=f"question_{i}",
                 label_visibility="collapsed"
             )
+            
             st.session_state.question_responses[question["id"]] = response
-        
-        with cols[2]:
-            st.markdown("<p class='scale-label'>Concordo</p>", unsafe_allow_html=True)
+    
+    
+    
+    
+    
+    
     
     # Botões de navegação
     col1, col2, col3 = st.columns([1, 1, 1])
