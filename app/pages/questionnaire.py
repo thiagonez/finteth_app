@@ -225,6 +225,28 @@ def load_custom_radio_css():
         border-color: #8B5CF6 !important;
     }
     
+    .scale-button.selected {
+  background-color: var(--primary-color);   /* Preenche a bolinha */
+  border-color: var(--primary-color);       /* Borda na cor primária */
+  position: relative;
+  color: white;                             /* Garante contraste para o ícone */
+}
+
+.scale-button.selected::after {
+  content: "✓";
+  color: white;                             /* Ícone branco */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  pointer-events: none;                     /* Não interfere no clique */
+}
+
+    
+    
+    
+    
     /* Check quando SELECIONADO - APENAS o check, sem bolinha */
     div[role="radiogroup"] input[type="radio"]:checked + div::after {
         content: "✓" !important;
