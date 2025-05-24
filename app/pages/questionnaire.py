@@ -4,8 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from components.navigation import navigation_buttons
 
-
-
 def load_custom_radio_css():
     """Carrega CSS customizado para os radio buttons do questionário"""
     st.markdown("""
@@ -154,40 +152,67 @@ def load_custom_radio_css():
         z-index: 2;
     }
     
-    /* Efeito hover - bordas mais grossas e brilho */
+    /* EFEITO HOVER CORRIGIDO - preenchimento com a cor da borda */
     div[role="radiogroup"] label:hover > div:first-child {
         transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(0,0,0,0.3);
         border-width: 4px;
+        transition: all 0.3s ease;
     }
     
-    /* Efeito hover com cores correspondentes */
+    /* Hover específico para cada opção - PREENCHIMENTO COM AS CORES */
     div[role="radiogroup"] label:nth-child(1):hover > div:first-child {
+        background-color: #10B981 !important;
         box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
     }
     
     div[role="radiogroup"] label:nth-child(2):hover > div:first-child {
+        background-color: #34D399 !important;
         box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
     }
     
     div[role="radiogroup"] label:nth-child(3):hover > div:first-child {
+        background-color: #6EE7B7 !important;
         box-shadow: 0 0 15px rgba(110, 231, 183, 0.4);
     }
     
     div[role="radiogroup"] label:nth-child(4):hover > div:first-child {
+        background-color: #6B7280 !important;
         box-shadow: 0 0 15px rgba(107, 114, 128, 0.4);
     }
     
     div[role="radiogroup"] label:nth-child(5):hover > div:first-child {
+        background-color: #C084FC !important;
         box-shadow: 0 0 15px rgba(192, 132, 252, 0.4);
     }
     
     div[role="radiogroup"] label:nth-child(6):hover > div:first-child {
+        background-color: #A855F7 !important;
         box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
     }
     
     div[role="radiogroup"] label:nth-child(7):hover > div:first-child {
+        background-color: #8B5CF6 !important;
         box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+    }
+    
+    /* Check temporário no hover */
+    div[role="radiogroup"] label:hover > div:first-child::after {
+        content: "✓";
+        color: white !important;
+        font-weight: bold;
+        font-size: 16px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        z-index: 2;
+        opacity: 0.7;
+    }
+    
+    /* Não mostrar check temporário se já estiver selecionado */
+    div[role="radiogroup"] input[type="radio"]:checked + div:hover::after {
+        opacity: 1 !important;
     }
     
     /* Responsividade para dispositivos móveis */
@@ -208,6 +233,14 @@ def load_custom_radio_css():
     }
     </style>
     """, unsafe_allow_html=True)
+
+
+
+
+
+
+
+
 
 
 
