@@ -263,6 +263,26 @@ def load_custom_radio_css():
         outline: 3px solid #3B82F6;
         outline-offset: 2px;
     }
+
+
+
+  /* Remove o SVG padrão do Streamlit que aparece no centro do círculo */
+div[role="radiogroup"] svg,
+div[role="radiogroup"] label svg,
+div[role="radiogroup"] label path {
+    display: none !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+
+
+
+
+
+
+    
     </style>
     """, unsafe_allow_html=True)
 
