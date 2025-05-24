@@ -8,9 +8,165 @@ def load_custom_radio_css():
     """Carrega CSS customizado para os radio buttons do questionário"""
     st.markdown("""
     <style>
-    /* CSS completo fornecido acima */
+    /* Ocultar radio buttons padrão */
+    div[role="radiogroup"] input[type="radio"] {
+        appearance: none;
+        -webkit-appearance: none;
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    /* Container dos radio buttons */
+    div[role="radiogroup"] {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+    }
+    
+    /* Estilo base dos círculos */
+    div[role="radiogroup"] label {
+        cursor: pointer;
+        margin: 0 !important;
+    }
+    
+    div[role="radiogroup"] label > div:last-child {
+        display: none !important;
+    }
+    
+    /* Círculos customizados */
+    div[role="radiogroup"] label > div:first-child {
+        border-radius: 50% !important;
+        border: 3px solid;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: all 0.3s ease;
+        background-color: transparent !important;
+    }
+    
+    /* Tamanhos e cores específicos para cada opção */
+    /* Opção 1 - Verde muito grande (Concordo totalmente) */
+    div[role="radiogroup"] label:nth-child(1) > div:first-child {
+        width: 60px;
+        height: 60px;
+        border-color: #10B981;
+    }
+    
+    /* Opção 2 - Verde grande */
+    div[role="radiogroup"] label:nth-child(2) > div:first-child {
+        width: 50px;
+        height: 50px;
+        border-color: #34D399;
+    }
+    
+    /* Opção 3 - Verde menor */
+    div[role="radiogroup"] label:nth-child(3) > div:first-child {
+        width: 40px;
+        height: 40px;
+        border-color: #6EE7B7;
+    }
+    
+    /* Opção 4 - Cinza pequeno (Neutro) */
+    div[role="radiogroup"] label:nth-child(4) > div:first-child {
+        width: 30px;
+        height: 30px;
+        border-color: #6B7280;
+    }
+    
+    /* Opção 5 - Roxo menor */
+    div[role="radiogroup"] label:nth-child(5) > div:first-child {
+        width: 40px;
+        height: 40px;
+        border-color: #C084FC;
+    }
+    
+    /* Opção 6 - Roxo grande */
+    div[role="radiogroup"] label:nth-child(6) > div:first-child {
+        width: 50px;
+        height: 50px;
+        border-color: #A855F7;
+    }
+    
+    /* Opção 7 - Roxo muito grande (Discordo totalmente) */
+    div[role="radiogroup"] label:nth-child(7) > div:first-child {
+        width: 60px;
+        height: 60px;
+        border-color: #8B5CF6;
+    }
+    
+    /* Estados selecionados - preenchimento com check */
+    div[role="radiogroup"] input[type="radio"]:checked + div {
+        background-color: currentColor !important;
+        border-color: currentColor !important;
+    }
+    
+    /* Ícone de check quando selecionado */
+    div[role="radiogroup"] input[type="radio"]:checked + div::after {
+        content: "✓";
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    /* Cores de preenchimento quando selecionado */
+    div[role="radiogroup"] label:nth-child(1) input[type="radio"]:checked + div {
+        background-color: #10B981 !important;
+    }
+    
+    div[role="radiogroup"] label:nth-child(2) input[type="radio"]:checked + div {
+        background-color: #34D399 !important;
+    }
+    
+    div[role="radiogroup"] label:nth-child(3) input[type="radio"]:checked + div {
+        background-color: #6EE7B7 !important;
+    }
+    
+    div[role="radiogroup"] label:nth-child(4) input[type="radio"]:checked + div {
+        background-color: #6B7280 !important;
+    }
+    
+    div[role="radiogroup"] label:nth-child(5) input[type="radio"]:checked + div {
+        background-color: #C084FC !important;
+    }
+    
+    div[role="radiogroup"] label:nth-child(6) input[type="radio"]:checked + div {
+        background-color: #A855F7 !important;
+    }
+    
+    div[role="radiogroup"] label:nth-child(7) input[type="radio"]:checked + div {
+        background-color: #8B5CF6 !important;
+    }
+    
+    /* Efeito hover */
+    div[role="radiogroup"] label:hover > div:first-child {
+        transform: scale(1.1);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    /* Responsividade para dispositivos móveis */
+    @media (max-width: 768px) {
+        div[role="radiogroup"] {
+            gap: 10px;
+        }
+        
+        div[role="radiogroup"] label > div:first-child {
+            transform: scale(0.8);
+        }
+    }
     </style>
     """, unsafe_allow_html=True)
+
+
 
 def show():
     """Página de questionário comportamental"""
@@ -119,35 +275,43 @@ def show():
     start_idx = (current_page - 1) * questions_per_page
     end_idx = min(start_idx + questions_per_page, len(questions))
 
-    for i in range(start_idx, end_idx):
-        question = questions[i]
-        
-        # Pergunta centralizada
-        st.markdown(f"<h3 style='text-align: center; margin-bottom: 10px;'>{question['text']}</h3>", unsafe_allow_html=True)
-        
-        # Labels de Concordo e Discordo
-        cols_labels = st.columns([1, 6, 1])
-        with cols_labels[0]:
-            st.markdown("<p style='text-align: center; color: #10B981; font-weight: bold; margin-bottom: 5px;'>Concordo</p>", unsafe_allow_html=True)
-        
-        with cols_labels[2]:
-            st.markdown("<p style='text-align: center; color: #8B5CF6; font-weight: bold; margin-bottom: 5px;'>Discordo</p>", unsafe_allow_html=True)
-        
-        # Radio buttons customizados
-        response = st.radio(
-            f"Pergunta {i+1}",
-            options=[1, 2, 3, 4, 5, 6, 7],
-            index=st.session_state.question_responses.get(question["id"], 4) - 1,
-            horizontal=True,
-            label_visibility="collapsed",
-            key=f"question_{question['id']}"
-        )
-        
-        # Armazenar resposta
-        st.session_state.question_responses[question["id"]] = response
-        
-        # Espaçamento entre perguntas
-        st.markdown("<div style='margin-bottom: 40px;'></div>", unsafe_allow_html=True)
+    
+
+# Nova implementação com radio buttons customizados
+for i in range(start_idx, end_idx):
+    question = questions[i]
+    
+    # Pergunta centralizada
+    st.markdown(f"<h3 style='text-align: center; margin-bottom: 10px;'>{question['text']}</h3>", unsafe_allow_html=True)
+    
+    # Labels de Concordo e Discordo
+    cols_labels = st.columns([1, 6, 1])
+    with cols_labels[0]:
+        st.markdown("<p style='text-align: center; color: #10B981; font-weight: bold; margin-bottom: 5px;'>Concordo</p>", unsafe_allow_html=True)
+    
+    with cols_labels[2]:
+        st.markdown("<p style='text-align: center; color: #8B5CF6; font-weight: bold; margin-bottom: 5px;'>Discordo</p>", unsafe_allow_html=True)
+    
+    # Radio buttons customizados
+    response = st.radio(
+        f"Pergunta {i+1}",
+        options=[1, 2, 3, 4, 5, 6, 7],
+        index=st.session_state.question_responses.get(question["id"], 4) - 1,  # Converter para índice (0-6)
+        horizontal=True,
+        label_visibility="collapsed",
+        key=f"question_{question['id']}"
+    )
+    
+    # Armazenar resposta
+    st.session_state.question_responses[question["id"]] = response
+    
+    # Espaçamento entre perguntas
+    st.markdown("<div style='margin-bottom: 40px;'></div>", unsafe_allow_html=True)
+
+
+
+
+    
 
     # Botões de navegação (mantém igual)
     col1, col2, col3 = st.columns([1, 1, 1])
