@@ -8,14 +8,26 @@ def load_custom_radio_css():
     """Carrega CSS customizado para os radio buttons do questionário"""
     st.markdown("""
     <style>
-    /* Ocultar radio buttons padrão */
+    /* Ocultar completamente radio buttons padrão */
     div[role="radiogroup"] input[type="radio"] {
-        appearance: none;
-        -webkit-appearance: none;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
         position: absolute;
         opacity: 0;
         width: 0;
         height: 0;
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: none;
+    }
+    
+    /* Remover TODOS os pseudo-elementos padrão */
+    div[role="radiogroup"] input[type="radio"]::before,
+    div[role="radiogroup"] input[type="radio"]::after {
+        display: none !important;
+        content: none !important;
     }
     
     /* Container dos radio buttons */
@@ -35,11 +47,12 @@ def load_custom_radio_css():
         position: relative;
     }
     
+    /* Ocultar textos dos labels */
     div[role="radiogroup"] label > div:last-child {
         display: none !important;
     }
     
-    /* Círculos customizados - estado não selecionado */
+    /* Círculos customizados - LIMPOS sem bolinha */
     div[role="radiogroup"] label > div:first-child {
         border-radius: 50% !important;
         border: 3px solid;
@@ -50,6 +63,15 @@ def load_custom_radio_css():
         transition: all 0.3s ease;
         background-color: transparent !important;
         cursor: pointer;
+        /* IMPORTANTE: Remover qualquer conteúdo padrão */
+        content: none !important;
+    }
+    
+    /* Remover TODOS os pseudo-elementos das divs também */
+    div[role="radiogroup"] label > div:first-child::before,
+    div[role="radiogroup"] label > div:first-child::after {
+        display: none !important;
+        content: none !important;
     }
     
     /* Tamanhos e cores específicos para cada opção */
@@ -102,7 +124,72 @@ def load_custom_radio_css():
         border-color: #8B5CF6;
     }
     
-    /* Estados selecionados - preenchimento COMPLETO com cores correspondentes */
+    /* HOVER - Preenchimento SEM bolinha, apenas com check */
+    div[role="radiogroup"] label:nth-child(1):hover > div:first-child {
+        background-color: #10B981 !important;
+        transform: scale(1.05);
+        border-width: 4px;
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    }
+    
+    div[role="radiogroup"] label:nth-child(2):hover > div:first-child {
+        background-color: #34D399 !important;
+        transform: scale(1.05);
+        border-width: 4px;
+        box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+    }
+    
+    div[role="radiogroup"] label:nth-child(3):hover > div:first-child {
+        background-color: #6EE7B7 !important;
+        transform: scale(1.05);
+        border-width: 4px;
+        box-shadow: 0 0 15px rgba(110, 231, 183, 0.4);
+    }
+    
+    div[role="radiogroup"] label:nth-child(4):hover > div:first-child {
+        background-color: #6B7280 !important;
+        transform: scale(1.05);
+        border-width: 4px;
+        box-shadow: 0 0 15px rgba(107, 114, 128, 0.4);
+    }
+    
+    div[role="radiogroup"] label:nth-child(5):hover > div:first-child {
+        background-color: #C084FC !important;
+        transform: scale(1.05);
+        border-width: 4px;
+        box-shadow: 0 0 15px rgba(192, 132, 252, 0.4);
+    }
+    
+    div[role="radiogroup"] label:nth-child(6):hover > div:first-child {
+        background-color: #A855F7 !important;
+        transform: scale(1.05);
+        border-width: 4px;
+        box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+    }
+    
+    div[role="radiogroup"] label:nth-child(7):hover > div:first-child {
+        background-color: #8B5CF6 !important;
+        transform: scale(1.05);
+        border-width: 4px;
+        box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+    }
+    
+    /* Check no hover - APENAS quando hover */
+    div[role="radiogroup"] label:hover > div:first-child::after {
+        content: "✓" !important;
+        color: white !important;
+        font-weight: bold;
+        font-size: 16px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        z-index: 10;
+        display: block !important;
+    }
+    
+    /* Estados SELECIONADOS - preenchimento COMPLETO SEM bolinha */
     div[role="radiogroup"] label:nth-child(1) input[type="radio"]:checked + div {
         background-color: #10B981 !important;
         border-color: #10B981 !important;
@@ -138,9 +225,9 @@ def load_custom_radio_css():
         border-color: #8B5CF6 !important;
     }
     
-    /* Ícone de check BRANCO e maior quando selecionado */
+    /* Check quando SELECIONADO - APENAS o check, sem bolinha */
     div[role="radiogroup"] input[type="radio"]:checked + div::after {
-        content: "✓";
+        content: "✓" !important;
         color: white !important;
         font-weight: bold;
         font-size: 18px;
@@ -149,69 +236,14 @@ def load_custom_radio_css():
         left: 50%;
         transform: translate(-50%, -50%);
         text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        z-index: 2;
+        z-index: 10;
+        display: block !important;
     }
     
-    /* EFEITO HOVER CORRIGIDO - preenchimento com a cor da borda */
-    div[role="radiogroup"] label:hover > div:first-child {
-        transform: scale(1.05);
-        border-width: 4px;
-        transition: all 0.3s ease;
-    }
-    
-    /* Hover específico para cada opção - PREENCHIMENTO COM AS CORES */
-    div[role="radiogroup"] label:nth-child(1):hover > div:first-child {
-        background-color: #10B981 !important;
-        box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-    }
-    
-    div[role="radiogroup"] label:nth-child(2):hover > div:first-child {
-        background-color: #34D399 !important;
-        box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
-    }
-    
-    div[role="radiogroup"] label:nth-child(3):hover > div:first-child {
-        background-color: #6EE7B7 !important;
-        box-shadow: 0 0 15px rgba(110, 231, 183, 0.4);
-    }
-    
-    div[role="radiogroup"] label:nth-child(4):hover > div:first-child {
-        background-color: #6B7280 !important;
-        box-shadow: 0 0 15px rgba(107, 114, 128, 0.4);
-    }
-    
-    div[role="radiogroup"] label:nth-child(5):hover > div:first-child {
-        background-color: #C084FC !important;
-        box-shadow: 0 0 15px rgba(192, 132, 252, 0.4);
-    }
-    
-    div[role="radiogroup"] label:nth-child(6):hover > div:first-child {
-        background-color: #A855F7 !important;
-        box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
-    }
-    
-    div[role="radiogroup"] label:nth-child(7):hover > div:first-child {
-        background-color: #8B5CF6 !important;
-        box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
-    }
-    
-    /* Check temporário no hover */
-    div[role="radiogroup"] label:hover > div:first-child::after {
-        content: "✓";
-        color: white !important;
-        font-weight: bold;
-        font-size: 16px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        z-index: 2;
-        opacity: 0.7;
-    }
-    
-    /* Não mostrar check temporário se já estiver selecionado */
+    /* Garantir que não apareça check quando selecionado E com hover */
     div[role="radiogroup"] input[type="radio"]:checked + div:hover::after {
+        content: "✓" !important;
+        font-size: 18px !important;
         opacity: 1 !important;
     }
     
