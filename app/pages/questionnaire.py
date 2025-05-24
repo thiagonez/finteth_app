@@ -247,6 +247,27 @@ def load_custom_radio_css():
         opacity: 1 !important;
     }
     
+    /* Remover SVG e bolinha branca central do radio selecionado do Streamlit */
+    div[role="radiogroup"] label svg,
+    div[role="radiogroup"] label svg g,
+    div[role="radiogroup"] label svg path,
+    div[role="radiogroup"] label svg circle {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        fill: transparent !important;
+    }
+    
+    /* Garantir que o círculo customizado substitua completamente o padrão */
+    div[role="radiogroup"] label > div:first-child {
+        box-sizing: border-box !important;
+        background-clip: content-box !important;
+        -webkit-background-clip: content-box !important;
+        -moz-background-clip: content-box !important;
+    }
+    
     /* Responsividade para dispositivos móveis */
     @media (max-width: 768px) {
         div[role="radiogroup"] {
@@ -263,47 +284,8 @@ def load_custom_radio_css():
         outline: 3px solid #3B82F6;
         outline-offset: 2px;
     }
-
-
-
-  /* Remove SVG e bolinha branca central do radio selecionado do Streamlit */
-div[role="radiogroup"] label svg,
-div[role="radiogroup"] label svg g,
-div[role="radiogroup"] label svg path,
-div[role="radiogroup"] label svg circle {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    fill: transparent !important;
-}
-div[role="radiogroup"] label > div:first-child {
-    box-sizing: border-box !important;
-}
-
-
-
-
-
-
-
-    
     </style>
     """, unsafe_allow_html=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def show():
     """Página de questionário comportamental"""
@@ -404,7 +386,6 @@ def show():
     start_idx = (current_page - 1) * questions_per_page
     end_idx = min(start_idx + questions_per_page, len(questions))
 
-    # IMPORTANTE: Todo este bloco deve estar DENTRO da função show()
     for i in range(start_idx, end_idx):
         question = questions[i]
         
