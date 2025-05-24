@@ -266,14 +266,16 @@ def load_custom_radio_css():
 
 
 
-  /* Remove o SVG padrão do Streamlit que aparece no centro do círculo */
+  /* Remove SVG e bolinha branca central do radio selecionado do Streamlit */
 div[role="radiogroup"] svg,
-div[role="radiogroup"] label svg,
-div[role="radiogroup"] label path {
+div[role="radiogroup"] g,
+div[role="radiogroup"] path,
+div[role="radiogroup"] label > div:nth-child(2) {
     display: none !important;
     opacity: 0 !important;
     width: 0 !important;
     height: 0 !important;
+    pointer-events: none !important;
 }
 
 
