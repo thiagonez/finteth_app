@@ -267,15 +267,19 @@ def load_custom_radio_css():
 
 
   /* Remove SVG e bolinha branca central do radio selecionado do Streamlit */
-div[role="radiogroup"] svg,
-div[role="radiogroup"] g,
-div[role="radiogroup"] path,
-div[role="radiogroup"] label > div:nth-child(2) {
+div[role="radiogroup"] label svg,
+div[role="radiogroup"] label svg g,
+div[role="radiogroup"] label svg path,
+div[role="radiogroup"] label svg circle {
     display: none !important;
-    opacity: 0 !important;
     width: 0 !important;
     height: 0 !important;
+    opacity: 0 !important;
     pointer-events: none !important;
+    fill: transparent !important;
+}
+div[role="radiogroup"] label > div:first-child {
+    box-sizing: border-box !important;
 }
 
 
