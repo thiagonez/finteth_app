@@ -5,62 +5,58 @@ import matplotlib.pyplot as plt
 from components.navigation import navigation_buttons
 
 def show():
-    """Página de questionário comportamental"""
-    
-    # CSS para estilização dos radio buttons
+    """Página de questionário comportamental com botões de rádio estilizados"""
+
+    # CSS para estilizar os botões de rádio horizontais
     st.markdown("""
     <style>
         div[role=radiogroup] {
             display: flex;
-            justify-content: space-between;
-            gap: 4px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 8px;
+            padding: 8px 0;
         }
         div[role=radiogroup] label {
-            flex: 1;
+            flex: 0 0 auto;
+            min-width: 180px;
             text-align: center;
-            padding: 8px;
+            padding: 8px 12px;
             border-radius: 20px;
             border: 2px solid #4F8BF9;
-            transition: all 0.3s;
-            background: #F8F9FA;
+            cursor: pointer;
+            transition: all 0.2s;
         }
         div[role=radiogroup] label:hover {
-            background: #4F8BF920;
+            background-color: #4F8BF9;
+            color: white;
         }
-        div[role=radiogroup] label[data-baseweb=radio] div:first-child {
-            display: none !important;
+        div[role=radiogroup] input[type=radio] {
+            display: none;
+        }
+        div[role=radiogroup] input[type=radio]:checked + span {
+            background-color: #4F8BF9;
+            color: white;
         }
     </style>
     """, unsafe_allow_html=True)
 
     st.markdown("<h1>Questionário Comportamental</h1>", unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div class="instruction-container">
-        <p>Este questionário ajudará a identificar seu perfil comportamental em relação ao dinheiro.
-        Responda com sinceridade para obter resultados mais precisos.</p>
-        <p>Não existem respostas certas ou erradas. O objetivo é entender sua relação única com o dinheiro.</p>
-    </div>
-    """, unsafe_allow_html=True)
 
-    # Opções do questionário com labels completos
+    # Opções de resposta com labels completos
     opcoes = {
-        1: "1 - Discordo totalmente",
-        2: "2 - Discordo moderadamente",
-        3: "3 - Discordo um pouco", 
-        4: "4 - Neutro",
-        5: "5 - Concordo um pouco",
-        6: "6 - Concordo moderadamente",
-        7: "7 - Concordo totalmente"
+        1: "Discordo totalmente",
+        2: "Discordo moderadamente",
+        3: "Discordo um pouco",
+        4: "Nem concordo nem discordo",
+        5: "Concordo um pouco",
+        6: "Concordo moderadamente",
+        7: "Concordo totalmente"
     }
 
-    # Inicializar respostas no state se não existirem
+    # Inicializar respostas na sessão
     if "question_responses" not in st.session_state:
         st.session_state.question_responses = {}
-    
-    
-    
-    
     
 
     
@@ -128,55 +124,49 @@ def show():
         }
     ]
     
-     # Configuração de paginação
+     # Paginação
     questions_per_page = 3
     total_pages = (len(questions) + questions_per_page - 1) // questions_per_page
     current_page = st.session_state.get('questionnaire_page', 1)
 
-    # Exibir barra de progresso
-    progress = (current_page - 1) / total_pages
-    st.progress(progress)
-    st.markdown(f"<p class='progress-text'>Etapa {current_page} de {total_pages}</p>", unsafe_allow_html=True)
-
-    # Exibir perguntas da página atual
     start_idx = (current_page - 1) * questions_per_page
     end_idx = min(start_idx + questions_per_page, len(questions))
-    
+
     for i in range(start_idx, end_idx):
         question = questions[i]
-        
-        # Container para cada pergunta
-        with st.container():
-            st.markdown(f"**Pergunta {i+1}:** {question['text']}")
-            
-            # Botões de rádio estilizados
+        st.markdown(f"**Pergunta {i+1}:** {question['text']}")
+
+        # Layout horizontal com botões de rádio estilizados
+        cols = st.columns([1, 4, 1])
+        with cols[0]:
+            st.markdown("<div style='text-align: right; color: #FF4B4B;'>Discordo</div>", unsafe_allow_html=True)
+        with cols[1]:
             response = st.radio(
-                label=f"Resposta {i+1}",
+                "",
                 options=list(opcoes.keys()),
                 format_func=lambda x: opcoes[x],
-                horizontal=True,
-                key=f"question_{i}",
+                index=3,
+                key=f"question_{question['id']}",
                 label_visibility="collapsed"
             )
-            
-            st.session_state.question_responses[question["id"]] = response
+            st.session_state.question_responses[question['id']] = response
+        with cols[2]:
+            st.markdown("<div style='text-align: left; color: #4F8BF9;'>Concordo</div>", unsafe_allow_html=True)
 
     # Botões de navegação
     col1, col2, col3 = st.columns([1, 1, 1])
-    
-    with col1:
-        if current_page > 1 and st.button("← Anterior"):
-            st.session_state.questionnaire_page -= 1
-            st.rerun()
-    
-    with col3:
-        if current_page < total_pages and st.button("Próximo →"):
-            st.session_state.questionnaire_page += 1
-            st.rerun()
-        elif current_page == total_pages and st.button("Finalizar Questionário"):
-            st.session_state.questionnaire_completed = True
-            st.session_state.current_page = "dashboard"
-            st.rerun()
+    if current_page > 1 and st.button("← Anterior"):
+        st.session_state['questionnaire_page'] = current_page - 1
+        st.rerun()
+
+    if current_page < total_pages and st.button("Próximo →"):
+        st.session_state['questionnaire_page'] = current_page + 1
+        st.rerun()
+
+    if current_page == total_pages and st.button("Finalizar Questionário"):
+        st.session_state['questionnaire_completed'] = True
+        st.session_state['current_page'] = "dashboard"
+        st.rerun()
 
     navigation_buttons()
     
