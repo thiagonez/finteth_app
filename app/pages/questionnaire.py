@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from components.navigation import navigation_buttons
 
+
+
 def load_custom_radio_css():
     """Carrega CSS customizado para os radio buttons do questionário"""
     st.markdown("""
@@ -32,13 +34,14 @@ def load_custom_radio_css():
     div[role="radiogroup"] label {
         cursor: pointer;
         margin: 0 !important;
+        position: relative;
     }
     
     div[role="radiogroup"] label > div:last-child {
         display: none !important;
     }
     
-    /* Círculos customizados */
+    /* Círculos customizados - estado não selecionado */
     div[role="radiogroup"] label > div:first-child {
         border-radius: 50% !important;
         border: 3px solid;
@@ -48,10 +51,11 @@ def load_custom_radio_css():
         position: relative;
         transition: all 0.3s ease;
         background-color: transparent !important;
+        cursor: pointer;
     }
     
     /* Tamanhos e cores específicos para cada opção */
-    /* Opção 1 - Verde muito grande (Concordo totalmente) */
+    /* Opção 1 - Verde muito grande */
     div[role="radiogroup"] label:nth-child(1) > div:first-child {
         width: 60px;
         height: 60px;
@@ -93,64 +97,97 @@ def load_custom_radio_css():
         border-color: #A855F7;
     }
     
-    /* Opção 7 - Roxo muito grande (Discordo totalmente) */
+    /* Opção 7 - Roxo muito grande */
     div[role="radiogroup"] label:nth-child(7) > div:first-child {
         width: 60px;
         height: 60px;
         border-color: #8B5CF6;
     }
     
-    /* Estados selecionados - preenchimento com check */
-    div[role="radiogroup"] input[type="radio"]:checked + div {
-        background-color: currentColor !important;
-        border-color: currentColor !important;
-    }
-    
-    /* Ícone de check quando selecionado */
-    div[role="radiogroup"] input[type="radio"]:checked + div::after {
-        content: "✓";
-        color: white;
-        font-weight: bold;
-        font-size: 16px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    
-    /* Cores de preenchimento quando selecionado */
+    /* Estados selecionados - preenchimento COMPLETO com cores correspondentes */
     div[role="radiogroup"] label:nth-child(1) input[type="radio"]:checked + div {
         background-color: #10B981 !important;
+        border-color: #10B981 !important;
     }
     
     div[role="radiogroup"] label:nth-child(2) input[type="radio"]:checked + div {
         background-color: #34D399 !important;
+        border-color: #34D399 !important;
     }
     
     div[role="radiogroup"] label:nth-child(3) input[type="radio"]:checked + div {
         background-color: #6EE7B7 !important;
+        border-color: #6EE7B7 !important;
     }
     
     div[role="radiogroup"] label:nth-child(4) input[type="radio"]:checked + div {
         background-color: #6B7280 !important;
+        border-color: #6B7280 !important;
     }
     
     div[role="radiogroup"] label:nth-child(5) input[type="radio"]:checked + div {
         background-color: #C084FC !important;
+        border-color: #C084FC !important;
     }
     
     div[role="radiogroup"] label:nth-child(6) input[type="radio"]:checked + div {
         background-color: #A855F7 !important;
+        border-color: #A855F7 !important;
     }
     
     div[role="radiogroup"] label:nth-child(7) input[type="radio"]:checked + div {
         background-color: #8B5CF6 !important;
+        border-color: #8B5CF6 !important;
     }
     
-    /* Efeito hover */
+    /* Ícone de check BRANCO e maior quando selecionado */
+    div[role="radiogroup"] input[type="radio"]:checked + div::after {
+        content: "✓";
+        color: white !important;
+        font-weight: bold;
+        font-size: 18px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        z-index: 2;
+    }
+    
+    /* Efeito hover - bordas mais grossas e brilho */
     div[role="radiogroup"] label:hover > div:first-child {
-        transform: scale(1.1);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        border-width: 4px;
+    }
+    
+    /* Efeito hover com cores correspondentes */
+    div[role="radiogroup"] label:nth-child(1):hover > div:first-child {
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    }
+    
+    div[role="radiogroup"] label:nth-child(2):hover > div:first-child {
+        box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+    }
+    
+    div[role="radiogroup"] label:nth-child(3):hover > div:first-child {
+        box-shadow: 0 0 15px rgba(110, 231, 183, 0.4);
+    }
+    
+    div[role="radiogroup"] label:nth-child(4):hover > div:first-child {
+        box-shadow: 0 0 15px rgba(107, 114, 128, 0.4);
+    }
+    
+    div[role="radiogroup"] label:nth-child(5):hover > div:first-child {
+        box-shadow: 0 0 15px rgba(192, 132, 252, 0.4);
+    }
+    
+    div[role="radiogroup"] label:nth-child(6):hover > div:first-child {
+        box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+    }
+    
+    div[role="radiogroup"] label:nth-child(7):hover > div:first-child {
+        box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
     }
     
     /* Responsividade para dispositivos móveis */
@@ -163,8 +200,19 @@ def load_custom_radio_css():
             transform: scale(0.8);
         }
     }
+    
+    /* Melhorar acessibilidade - foco por teclado */
+    div[role="radiogroup"] input[type="radio"]:focus + div {
+        outline: 3px solid #3B82F6;
+        outline-offset: 2px;
+    }
     </style>
     """, unsafe_allow_html=True)
+
+
+
+
+
 
 def show():
     """Página de questionário comportamental"""
