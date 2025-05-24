@@ -6,9 +6,8 @@ from components.navigation import navigation_buttons
 
 def show():
     """Página de questionário comportamental"""
-
-
-# Thiago aqui CSS para estilização dos radio buttons
+    
+    # CSS para estilização dos radio buttons
     st.markdown("""
     <style>
         div[role=radiogroup] {
@@ -34,8 +33,6 @@ def show():
     </style>
     """, unsafe_allow_html=True)
 
-
-    
     st.markdown("<h1>Questionário Comportamental</h1>", unsafe_allow_html=True)
     
     st.markdown("""
@@ -46,7 +43,7 @@ def show():
     </div>
     """, unsafe_allow_html=True)
 
- # Opções do questionário com labels completos
+    # Opções do questionário com labels completos
     opcoes = {
         1: "1 - Discordo totalmente",
         2: "2 - Discordo moderadamente",
@@ -57,13 +54,9 @@ def show():
         7: "7 - Concordo totalmente"
     }
 
-
-    
     # Inicializar respostas no state se não existirem
     if "question_responses" not in st.session_state:
         st.session_state.question_responses = {}
-    
-    
     
     
     
@@ -135,29 +128,17 @@ def show():
         }
     ]
     
-    # Determinar a página atual do questionário
+     # Configuração de paginação
     questions_per_page = 3
     total_pages = (len(questions) + questions_per_page - 1) // questions_per_page
-    
-    if "questionnaire_page" not in st.session_state:
-        st.session_state.questionnaire_page = 1
-    
-    current_page = st.session_state.questionnaire_page
-    
+    current_page = st.session_state.get('questionnaire_page', 1)
+
     # Exibir barra de progresso
     progress = (current_page - 1) / total_pages
     st.progress(progress)
     st.markdown(f"<p class='progress-text'>Etapa {current_page} de {total_pages}</p>", unsafe_allow_html=True)
-    
+
     # Exibir perguntas da página atual
-    start_idx = (current_page - 1) * questions_per_page
-    end_idx = min(start_idx + questions_per_page, len(questions))
-    
-    for i in range(start_idx, end_idx):
-        question = questions[i]
-        st.markdown(f"<h3 class='question-text'>{question['text']}</h3>", unsafe_allow_html=True)
-        
-       # Exibir perguntas da página atual
     start_idx = (current_page - 1) * questions_per_page
     end_idx = min(start_idx + questions_per_page, len(questions))
     
@@ -179,32 +160,25 @@ def show():
             )
             
             st.session_state.question_responses[question["id"]] = response
-    
-    
-    
-    
-    
-    
-    
+
     # Botões de navegação
     col1, col2, col3 = st.columns([1, 1, 1])
     
     with col1:
-        if current_page > 1:
-            if st.button("← Anterior"):
-                st.session_state.questionnaire_page -= 1
-                st.rerun()
+        if current_page > 1 and st.button("← Anterior"):
+            st.session_state.questionnaire_page -= 1
+            st.rerun()
     
     with col3:
-        if current_page < total_pages:
-            if st.button("Próximo →"):
-                st.session_state.questionnaire_page += 1
-                st.rerun()
-        else:
-            if st.button("Finalizar Questionário"):
-                st.session_state.questionnaire_completed = True
-                st.session_state.current_page = "dashboard"
-                st.rerun()
+        if current_page < total_pages and st.button("Próximo →"):
+            st.session_state.questionnaire_page += 1
+            st.rerun()
+        elif current_page == total_pages and st.button("Finalizar Questionário"):
+            st.session_state.questionnaire_completed = True
+            st.session_state.current_page = "dashboard"
+            st.rerun()
+
+    navigation_buttons()
     
     # Exibir resultados parciais se todas as perguntas foram respondidas
     if len(st.session_state.question_responses) == len(questions) and current_page == total_pages:
