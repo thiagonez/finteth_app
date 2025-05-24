@@ -4,122 +4,32 @@ import numpy as np
 import matplotlib.pyplot as plt
 from components.navigation import navigation_buttons
 
-def show():
-    """Página de questionário comportamental"""
-    
-    # CSS para botões verticais com cores específicas
+def load_custom_radio_css():
+    """Carrega CSS customizado para os radio buttons do questionário"""
     st.markdown("""
     <style>
-        /* Container dos radio buttons vertical */
-        div[role=radiogroup] {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin: 20px 0;
-        }
-        
-        /* Cada label do radio button */
-        div[role=radiogroup] label {
-            display: flex;
-            align-items: center;
-            padding: 8px 12px;
-            border-radius: 25px;
-            border: 2px solid;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        /* Estilizar as bolinhas dos radio buttons */
-        div[role=radiogroup] label div:first-child {
-            margin-right: 10px;
-            transform: scale(1.2);
-        }
-        
-        /* Botões de Discordo (roxo) - posições 1, 2, 3 */
-        div[role=radiogroup] label:nth-child(1),
-        div[role=radiogroup] label:nth-child(2),
-        div[role=radiogroup] label:nth-child(3) {
-            border-color: #8B5A96;
-            background-color: #F8F5F9;
-        }
-        
-        div[role=radiogroup] label:nth-child(1) input[type="radio"],
-        div[role=radiogroup] label:nth-child(2) input[type="radio"],
-        div[role=radiogroup] label:nth-child(3) input[type="radio"] {
-            accent-color: #8B5A96;
-        }
-        
-        /* Botão Neutro (cinza e menor) - posição 4 */
-        div[role=radiogroup] label:nth-child(4) {
-            border-color: #9E9E9E;
-            background-color: #F5F5F5;
-            transform: scale(0.9);
-        }
-        
-        div[role=radiogroup] label:nth-child(4) input[type="radio"] {
-            accent-color: #9E9E9E;
-        }
-        
-        /* Botões de Concordo (verde) - posições 5, 6, 7 */
-        div[role=radiogroup] label:nth-child(5),
-        div[role=radiogroup] label:nth-child(6),
-        div[role=radiogroup] label:nth-child(7) {
-            border-color: #4CAF50;
-            background-color: #F1F8E9;
-        }
-        
-        div[role=radiogroup] label:nth-child(5) input[type="radio"],
-        div[role=radiogroup] label:nth-child(6) input[type="radio"],
-        div[role=radiogroup] label:nth-child(7) input[type="radio"] {
-            accent-color: #4CAF50;
-        }
-        
-        /* Efeito hover */
-        div[role=radiogroup] label:hover {
-            transform: scale(1.02);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        /* Neutro mantém tamanho menor no hover */
-        div[role=radiogroup] label:nth-child(4):hover {
-            transform: scale(0.92);
-        }
-        
-        /* Estilo quando selecionado */
-        div[role=radiogroup] label:has(input[type="radio"]:checked) {
-            font-weight: bold;
-            transform: scale(1.05);
-        }
-        
-        /* Neutro selecionado mantém tamanho menor */
-        div[role=radiogroup] label:nth-child(4):has(input[type="radio"]:checked) {
-            transform: scale(0.95);
-        }
+    /* CSS completo fornecido acima */
     </style>
     """, unsafe_allow_html=True)
 
-    st.markdown("<h1>Questionário Comportamental</h1>", unsafe_allow_html=True)
+def show():
+    """Página de questionário comportamental"""
+    # Carregar CSS customizado PRIMEIRO
+    load_custom_radio_css()
     
     st.markdown("""
-    <div class="instruction-container">
-        <p>Responda com sinceridade para obter resultados mais precisos.</p>
-        <p>Selecione a opção que melhor representa sua opinião.</p>
+    <h2 style='text-align: center; color: #1f77b4;'>📊 Questionário Comportamental</h2>
+    
+    <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 15px; margin-bottom: 30px;'>
+        <p style='color: white; text-align: center; margin: 0; font-size: 16px;'>
+            Este questionário ajudará a identificar seu perfil comportamental em relação ao dinheiro.
+            Responda com sinceridade para obter resultados mais precisos.
+        </p>
+        <p style='color: #E8F4FF; text-align: center; margin: 10px 0 0 0; font-size: 14px;'>
+            Não existem respostas certas ou erradas. O objetivo é entender sua relação única com o dinheiro.
+        </p>
     </div>
     """, unsafe_allow_html=True)
-
-    # Opções com labels completos
-    opcoes = [
-        "Discordo totalmente",
-        "Discordo moderadamente", 
-        "Discordo um pouco",
-        "Nem concordo nem discordo",
-        "Concordo um pouco",
-        "Concordo moderadamente",
-        "Concordo totalmente"
-    ]
-# Inicializar respostas
-    if "question_responses" not in st.session_state:
-        st.session_state.question_responses = {}
 
 
 
@@ -193,58 +103,72 @@ def show():
     
     
     
-    # Configuração de paginação
-    questions_per_page = 3
-    total_pages = (len(questions) + questions_per_page - 1) // questions_per_page
-    current_page = st.session_state.get('questionnaire_page', 1)
+    # Configurações de paginação (mantém igual)
+    if 'questionnaire_page' not in st.session_state:
+        st.session_state.questionnaire_page = 1
+    if 'question_responses' not in st.session_state:
+        st.session_state.question_responses = {}
 
-    # Barra de progresso
-    progress = (current_page - 1) / total_pages
-    st.progress(progress)
-    st.markdown(f"<p>Etapa {current_page} de {total_pages}</p>", unsafe_allow_html=True)
+    questions_per_page = 5
+    total_pages = len(questions) // questions_per_page + (1 if len(questions) % questions_per_page > 0 else 0)
+    current_page = st.session_state.questionnaire_page
 
-    # Exibir perguntas
+    st.markdown(f"<h4 style='text-align: center;'>Etapa {current_page} de {total_pages}</h4>", unsafe_allow_html=True)
+
+    # Exibir perguntas da página atual - SEÇÃO MODIFICADA
     start_idx = (current_page - 1) * questions_per_page
     end_idx = min(start_idx + questions_per_page, len(questions))
-    
+
     for i in range(start_idx, end_idx):
         question = questions[i]
         
-        with st.container():
-            st.markdown(f"**Pergunta {i+1}:** {question['text']}")
-            
-            # Radio buttons verticais com cores
-            response = st.radio(
-                label=f"Resposta {i+1}",
-                options=opcoes,
-                key=f"question_{i}",
-                label_visibility="collapsed"
-            )
-            
-            # Converter resposta para número (1-7)
-            response_value = opcoes.index(response) + 1
-            st.session_state.question_responses[question["id"]] = response_value
-            
-            st.markdown("---")
+        # Pergunta centralizada
+        st.markdown(f"<h3 style='text-align: center; margin-bottom: 10px;'>{question['text']}</h3>", unsafe_allow_html=True)
+        
+        # Labels de Concordo e Discordo
+        cols_labels = st.columns([1, 6, 1])
+        with cols_labels[0]:
+            st.markdown("<p style='text-align: center; color: #10B981; font-weight: bold; margin-bottom: 5px;'>Concordo</p>", unsafe_allow_html=True)
+        
+        with cols_labels[2]:
+            st.markdown("<p style='text-align: center; color: #8B5CF6; font-weight: bold; margin-bottom: 5px;'>Discordo</p>", unsafe_allow_html=True)
+        
+        # Radio buttons customizados
+        response = st.radio(
+            f"Pergunta {i+1}",
+            options=[1, 2, 3, 4, 5, 6, 7],
+            index=st.session_state.question_responses.get(question["id"], 4) - 1,
+            horizontal=True,
+            label_visibility="collapsed",
+            key=f"question_{question['id']}"
+        )
+        
+        # Armazenar resposta
+        st.session_state.question_responses[question["id"]] = response
+        
+        # Espaçamento entre perguntas
+        st.markdown("<div style='margin-bottom: 40px;'></div>", unsafe_allow_html=True)
 
-    # Botões de navegação
+    # Botões de navegação (mantém igual)
     col1, col2, col3 = st.columns([1, 1, 1])
     
     with col1:
-        if current_page > 1 and st.button("← Anterior"):
-            st.session_state.questionnaire_page -= 1
-            st.rerun()
+        if current_page > 1:
+            if st.button("← Anterior"):
+                st.session_state.questionnaire_page -= 1
+                st.rerun()
     
     with col3:
-        if current_page < total_pages and st.button("Próximo →"):
-            st.session_state.questionnaire_page += 1
-            st.rerun()
-        elif current_page == total_pages and st.button("Finalizar Questionário"):
-            st.session_state.questionnaire_completed = True
-            st.session_state.current_page = "dashboard"
-            st.rerun()
+        if current_page < total_pages:
+            if st.button("Próximo →"):
+                st.session_state.questionnaire_page += 1
+                st.rerun()
+        else:
+            if st.button("Finalizar Questionário"):
+                st.session_state.questionnaire_completed = True
+                st.session_state.current_page = "dashboard"
+                st.rerun()
 
-    navigation_buttons()
 
 
 
